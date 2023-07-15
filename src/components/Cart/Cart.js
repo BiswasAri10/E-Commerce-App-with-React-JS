@@ -1,32 +1,11 @@
-import React, { useState } from "react";
-import CartItem from "./CartItem";
-import Button from 'react-bootstrap/Button';
-import './Cart.css'; 
+import React, { useState, useContext } from "react";
+import CartItems from "./CartItem";
+import { CartContext } from "../store/CartContext";
+import Button from "react-bootstrap/Button";
+import "./Cart.css";
 
 const Cart = () => {
-  const cartElements = [
-    {
-      title: "Colors",
-      price: 100,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-      quantity: 2,
-    },
-    {
-      title: "Black and white Colors",
-      price: 50,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-      quantity: 3,
-    },
-    {
-      title: "Yellow and Black Colors",
-      price: 70,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-      quantity: 1,
-    },
-  ];
+  const { getCartCount, cartItems, removeItemFromCart } = useContext(CartContext);
 
   const [isCartOpen, setCartOpen] = useState(false);
 
@@ -34,10 +13,8 @@ const Cart = () => {
     setCartOpen(!isCartOpen);
   };
 
-  const handleRemoveItemClick = (index) => {
-    const updatedCartElements = [...cartElements];
-    updatedCartElements.splice(index, 1);
-    setCartOpen(updatedCartElements);
+  const handleRemoveItemClick = (item) => {
+    removeItemFromCart(item);
   };
 
   return (
@@ -47,15 +24,15 @@ const Cart = () => {
         variant="outline-info"
         onClick={handleCartClick}
       >
-        Cart
+        Cart ({getCartCount()})
       </Button>
       {isCartOpen && (
         <div className="cart-items">
-          {cartElements.map((item, index) => (
-            <CartItem
+          {cartItems.map((item, index) => (
+            <CartItems
               key={index}
-              item={item}
-              handleRemoveItemClick={() => handleRemoveItemClick(index)}
+              cartItems={cartItems}
+              handleRemoveItemClick={() => handleRemoveItemClick(item)}
             />
           ))}
         </div>

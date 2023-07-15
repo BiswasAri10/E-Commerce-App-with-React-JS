@@ -1,17 +1,29 @@
-.product-list-container {
+.container {
+  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.row {
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
 .text-center {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.product-card {
+  margin: auto;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}

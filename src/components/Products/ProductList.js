@@ -1,49 +1,72 @@
-import React from 'react';
-import './ProductList.css'; // Import the CSS file
-import 'bootstrap/dist/css/bootstrap.min.css';// Import Bootstrap CSS
+import React, { useContext } from "react";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import "./ProductList.css";
+import { CartContext } from "../store/CartContext";
 
 const ProductList = () => {
+  const { addToCart } = useContext(CartContext);
   const productsArr = [
     {
-      title: 'Colors',
+      title: "Colors",
       price: 100,
-      imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
+      imageUrl:
+        "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
     },
     {
-      title: 'Black and white Colors',
+      title: "Black and white Colors",
       price: 50,
-      imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
+      imageUrl:
+        "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
     },
     {
-      title: 'Yellow and Black Colors',
+      title: "Yellow and Black Colors",
       price: 70,
-      imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
+      imageUrl:
+        "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
     },
     {
-      title: 'Blue Color',
+      title: "Blue Color",
       price: 100,
-      imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%204.png',
-    }
+      imageUrl:
+        "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
+    },
   ];
 
+  const handleAddToCart = (product) => {
+    addToCart(product);
+  };
+
   return (
-    <div className="product-list-container">
+    <Container>
       <h1 className="text-center">Products</h1>
-      <div className="row">
+      <Row>
         {productsArr.map((product, index) => (
-          <div className="col-md-6 mb-4" key={index}>
-            <div className="card product-card" style={{ width: '22rem' }}>
-              <img src={product.imageUrl} alt={product.title} className="card-img-top" />
-              <div className="card-body">
-                <h5 className="card-title">{product.title}</h5>
-                <p className="card-text">${product.price}</p>
-                <button className="btn btn-primary">Add to Cart</button>
-              </div>
-            </div>
-          </div>
+          <Col key={index} md={6}>
+            <Card className="product-card" style={{ width: "22rem" }}>
+              <Card.Img
+                variant="top"
+                src={product.imageUrl}
+                alt={product.title}
+              />
+              <Card.Body>
+                <Card.Title>{product.title}</Card.Title>
+                <Card.Text>${product.price}</Card.Text>
+                <Button
+                  variant="primary"
+                  onClick={() => handleAddToCart(product)}
+                >
+                  Add to Cart
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
-      </div>
-    </div>
+      </Row>
+    </Container>
   );
 };
 

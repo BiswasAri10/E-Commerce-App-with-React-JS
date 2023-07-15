@@ -1,15 +1,14 @@
 import React from 'react';
 import ProductList from './components/Products/ProductList';
 import Cart from './components/Cart/Cart';
+import { CartProvider } from './components/store/CartContext';
 
 function App() {
   return (
-    <div>
-      <header>
-        <Cart />
-      </header>
+    <CartProvider>
+      <Cart />
       <ProductList />
-    </div>
+    </CartProvider>
   );
 }
 

@@ -7,7 +7,7 @@
   }
   
   .cart-items {
-    position: absolute;
+    position: fixed;
     top: 70px;
     right: 10px;
     background-color: #fff;
