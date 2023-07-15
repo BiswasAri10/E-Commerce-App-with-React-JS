@@ -1,0 +1,38 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #2e2c2c;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+  
+  .navList {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .navItem {
+    font-size: 1.5rem;
+    margin-right: 20px;
+  }
+  
+  .navItem:last-child {
+    margin-right: 0;
+  }
+  
+  .navItem a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .navItem a:hover,
+  .navItem a:focus,
+  .navItem a:active {
+    color: #fff;
+    text-decoration: none;
+  }
+  

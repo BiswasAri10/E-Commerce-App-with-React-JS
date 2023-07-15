@@ -1,14 +1,23 @@
-import React from 'react';
-import ProductList from './components/Products/ProductList';
-import Cart from './components/Cart/Cart';
-import { CartProvider } from './components/store/CartContext';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from "./components/Layout/Header";
+import Home from "./components/External Pages/Home";
+import ProductList from "./components/Products/ProductList";
+import About from "./components/External Pages/About";
+import { CartProvider } from "./components/store/CartContext";
 
 function App() {
   return (
-    <CartProvider>
-      <Cart />
-      <ProductList />
-    </CartProvider>
+    <Router>
+      <CartProvider>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/store" element={<ProductList />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </CartProvider>
+    </Router>
   );
 }
 
