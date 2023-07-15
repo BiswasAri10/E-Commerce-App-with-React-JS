@@ -6,6 +6,9 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import "./ProductList.css";
 import { CartContext } from "../store/CartContext";
+import Header from "../Layout/Header";
+import Cart from '../Cart/Cart';
+import BrandName from "../Layout/BrandName";
 
 const ProductList = () => {
   const { addToCart } = useContext(CartContext);
@@ -41,32 +44,37 @@ const ProductList = () => {
   };
 
   return (
-    <Container>
-      <h1 className="text-center">Products</h1>
-      <Row>
-        {productsArr.map((product, index) => (
-          <Col key={index} md={6}>
-            <Card className="product-card" style={{ width: "22rem" }}>
-              <Card.Img
-                variant="top"
-                src={product.imageUrl}
-                alt={product.title}
-              />
-              <Card.Body>
-                <Card.Title>{product.title}</Card.Title>
-                <Card.Text>${product.price}</Card.Text>
-                <Button
-                  variant="primary"
-                  onClick={() => handleAddToCart(product)}
-                >
-                  Add to Cart
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </Container>
+    <div>
+      <Header />
+      <Cart />
+      <BrandName />
+      <Container>
+        <h1 className="text-center">Products</h1>
+        <Row>
+          {productsArr.map((product, index) => (
+            <Col key={index} md={6}>
+              <Card className="product-card" style={{ width: "22rem" }}>
+                <Card.Img
+                  variant="top"
+                  src={product.imageUrl}
+                  alt={product.title}
+                />
+                <Card.Body>
+                  <Card.Title>{product.title}</Card.Title>
+                  <Card.Text>${product.price}</Card.Text>
+                  <Button
+                    variant="primary"
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    Add to Cart
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    </div>
   );
 };
 

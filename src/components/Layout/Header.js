@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import classes from "./Header.module.css";
-import Cart from "../Cart/Cart";
 
 const Header = () => {
   return (
@@ -9,21 +8,20 @@ const Header = () => {
       <ul className={classes.navList}>
         <li className={classes.navItem}>
           <NavLink exact to="/" activeClassName={classes.activeLink}>
-            Home
+            HOME
           </NavLink>
         </li>
         <li className={classes.navItem}>
           <NavLink to="/store" activeClassName={classes.activeLink}>
-            Store
+            STORE
           </NavLink>
         </li>
         <li className={classes.navItem}>
           <NavLink to="/about" activeClassName={classes.activeLink}>
-            About
+            ABOUT
           </NavLink>
         </li>
         <li className={classes.navItem}>
-          <Cart />
         </li>
       </ul>
     </nav>
