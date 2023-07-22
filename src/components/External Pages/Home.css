@@ -71,20 +71,22 @@
   display: flex;
   align-items: center;
   width: 1200px;
-  margin-bottom: 20px;
-  margin-right: 20px;
-  background-color: white;
+  background-color: rgb(248, 247, 247);
   padding: 10px;
+  border: 1px solid black;
   border-radius: 5px;
 }
 
 .list-details {
+  font-family: "Times New Roman", Times, serif;
   font-size: 30px;
   flex-grow: 1;
 }
 
 .list-details span {
   display: block;
+  margin-left: 20px;
+  margin-top: 20px;
   margin-bottom: 40px;
 }
 
@@ -100,5 +102,5 @@
   cursor: pointer;
   margin-left: 100px;
   margin-bottom: 8px;
-  display: block; 
+  display: block;
 }
