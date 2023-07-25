@@ -1,6 +1,7 @@
 .contact-container {
-    max-width: 400px;
-    margin: 58px auto;
+    max-width: 500px;
+    height: 450px;
+    margin: 58px auto ;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;

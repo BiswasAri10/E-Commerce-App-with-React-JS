@@ -1,14 +1,10 @@
 import React, { useContext } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import "./ProductList.css";
+import { Link } from "react-router-dom";
 import { CartContext } from "../store/CartContext";
 import Header from "../Layout/Header";
-import Cart from '../Cart/Cart';
+import Cart from "../Cart/Cart";
 import BrandName from "../Layout/BrandName";
+import "./ProductList.css";
 
 const ProductList = () => {
   const { addToCart } = useContext(CartContext);
@@ -48,32 +44,34 @@ const ProductList = () => {
       <Header />
       <Cart />
       <BrandName />
-      <Container>
+      <div className="custom-container">
         <h1 className="text-center">Products</h1>
-        <Row>
+        <div className="custom-row">
           {productsArr.map((product, index) => (
-            <Col key={index} md={6}>
-              <Card className="product-card" style={{ width: "22rem" }}>
-                <Card.Img
-                  variant="top"
-                  src={product.imageUrl}
-                  alt={product.title}
-                />
-                <Card.Body>
-                  <Card.Title>{product.title}</Card.Title>
-                  <Card.Text>${product.price}</Card.Text>
-                  <Button
-                    variant="primary"
-                    onClick={() => handleAddToCart(product)}
-                  >
-                    Add to Cart
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
+            <div key={index} className="custom-col">
+              <Link to={`/products/${index + 1}`}>
+                <div className="product-card">
+                  <img
+                    className="card-img-top"
+                    src={product.imageUrl}
+                    alt={product.title}
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{product.title}</h5>
+                    <p className="card-text">${product.price}</p>
+                    <button
+                      className="custom-btn"
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </Link>
+            </div>
           ))}
-        </Row>
-      </Container>
+        </div>
+      </div>
     </div>
   );
 };
