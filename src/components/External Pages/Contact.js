@@ -11,7 +11,7 @@ const Contact = () => {
   const isValidPhoneNumber = (input) => {
     return input.trim().length === 10 && !isNaN(input.trim());
   };
-  
+
   const isValidEmail = (input) => {
     return input.indexOf("@") !== -1;
   };
@@ -20,14 +20,14 @@ const Contact = () => {
     event.preventDefault();
 
     if (!isValidPhoneNumber(phone)) {
-        alert("Please enter a valid phone number with at least 10 digits.");
-        return;
-      }
-    
-      if (!isValidEmail(email)) {
-        alert("Please enter a valid email address.");
-        return;
-      }
+      alert("Please enter a valid phone number with at least 10 digits.");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
 
     const data = {
       name: name,
@@ -52,19 +52,21 @@ const Contact = () => {
       }
 
       const responseData = await response.json();
-      console.log("Data successfully stored in Firebase:", responseData);
+      alert("Data successfully stored in Firebase:", responseData);
       setName("");
       setEmail("");
       setPhone("");
     } catch (error) {
-      console.error("Error while storing data in Firebase:", error);
+      alert("Error while storing data in Firebase:", error);
     }
   };
 
   return (
     <div>
-      <Header />
-      <BrandName />
+      <section>
+        <Header />
+        <BrandName />
+      </section>
       <div className="contact-container">
         <h1>Contact Us</h1>
         <form className="contact-form" onSubmit={handleSubmit}>
@@ -76,7 +78,6 @@ const Contact = () => {
             value={name}
             onChange={(event) => setName(event.target.value)}
           />
-
           <label htmlFor="email">Email ID:</label>
           <input
             type="email"

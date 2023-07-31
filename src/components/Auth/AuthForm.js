@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import AuthContext from "../store/Auth-Context";
+import AuthContext from "../store/AuthContext";
 import classes from "./AuthForm.module.css";
 import Header from "../Layout/Header";
 import BrandName from "../Layout/BrandName";

@@ -1,13 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CartContext } from "../store/CartContext";
+import AuthContext from "../store/AuthContext";
+import { useNavigate } from "react-router-dom";
 import Header from "../Layout/Header";
 import Cart from "../Cart/Cart";
 import BrandName from "../Layout/BrandName";
 import "./ProductList.css";
 
 const ProductList = () => {
+  const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
+
+  useEffect(() => {
+    if (!authCtx.isLoggedIn) {
+      navigate("/login");
+    }
+  }, [authCtx.isLoggedIn, navigate]);
+
   const productsArr = [
     {
       title: "Colors",
