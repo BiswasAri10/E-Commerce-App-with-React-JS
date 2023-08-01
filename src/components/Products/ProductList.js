@@ -28,7 +28,7 @@ const ProductList = () => {
         "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
     },
     {
-      id: 'p2',
+      id: "p2",
       title: "Black and white Colors",
       price: 50,
       imageUrl:
@@ -51,7 +51,12 @@ const ProductList = () => {
   ];
 
   const handleAddToCart = (product) => {
-    addToCart(product);
+    const productWithQuantity = {
+      ...product,
+      quantity: 1,
+      total: product.price,
+    };
+    addToCart(productWithQuantity);
   };
 
   return (
@@ -64,7 +69,7 @@ const ProductList = () => {
         <div className="custom-row">
           {productsArr.map((product, index) => (
             <div key={index} className="custom-col">
-              <Link to={`/products/${index + 1}`}>
+              <Link to={`/products/${product.id}`}>
                 <div className="product-card">
                   <img
                     className="card-img-top"

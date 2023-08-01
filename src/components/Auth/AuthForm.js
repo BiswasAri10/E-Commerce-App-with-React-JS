@@ -1,5 +1,5 @@
 import { useState, useRef, useContext } from "react";
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 import AuthContext from "../store/AuthContext";
 import Header from "../Layout/Header";
@@ -11,7 +11,7 @@ const AuthForm = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
-const authCtx = useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
 
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -64,8 +64,8 @@ const authCtx = useContext(AuthContext);
         }
       })
       .then((data) => {
-        authCtx.login(data.idToken);
-        navigate('/store');
+        authCtx.login(data.idToken, enteredEmail);
+        navigate("/store");
       })
       .catch((error) => {
         alert(error.message);
@@ -73,44 +73,43 @@ const authCtx = useContext(AuthContext);
   };
 
   return (
-  <div>
-    <section>
-      <Header />
-      <BrandName />
-    </section>
-<section className={classes.auth}>
-      <h1>{isLogin ? "Login" : "Sign Up"}</h1>
-      <form onSubmit={submitHandler}>
-        <div className={classes.control}>
-          <label htmlFor="email">Your Email</label>
-          <input type="email" id="email" required ref={emailInputRef} />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="password">Your Password</label>
-          <input
-            type="password"
-            id="password"
-            required
-            ref={passwordInputRef}
-          />
-        </div>
-        <div className={classes.actions}>
-          {!isLoading && (
-            <button>{isLogin ? "Login" : "Create Account"}</button>
-          )}
-          {isLoading && <p>Sending request...</p>}
-          <button
-            type="button"
-            className={classes.toggle}
-            onClick={switchAuthModeHandler}
-          >
-            {isLogin ? "Create new account" : "Login with existing account"}
-          </button>
-        </div>
-      </form>
-    </section>
-  </div>
-    
+    <div>
+      <section>
+        <Header />
+        <BrandName />
+      </section>
+      <section className={classes.auth}>
+        <h1>{isLogin ? "Login" : "Sign Up"}</h1>
+        <form onSubmit={submitHandler}>
+          <div className={classes.control}>
+            <label htmlFor="email">Your Email</label>
+            <input type="email" id="email" required ref={emailInputRef} />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor="password">Your Password</label>
+            <input
+              type="password"
+              id="password"
+              required
+              ref={passwordInputRef}
+            />
+          </div>
+          <div className={classes.actions}>
+            {!isLoading && (
+              <button>{isLogin ? "Login" : "Create Account"}</button>
+            )}
+            {isLoading && <p>Sending request...</p>}
+            <button
+              type="button"
+              className={classes.toggle}
+              onClick={switchAuthModeHandler}
+            >
+              {isLogin ? "Create new account" : "Login with existing account"}
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
   );
 };
 

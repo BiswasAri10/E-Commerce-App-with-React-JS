@@ -20,7 +20,7 @@ const CartItems = ({ cartItems, handleRemoveItemClick, calculateTotal }) => {
             <div className="cart-table-price">${item.price}</div>
             <div className="cart-table-quantity">{item.quantity}</div>
             <div className="cart-table-total">
-              ${item.price * item.quantity}
+            ${isNaN(item.quantity) ? 0 : item.price * item.quantity}
             </div>
             <button
               className="cart-item-remove-btn"

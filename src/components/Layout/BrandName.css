@@ -11,8 +11,19 @@
 }
 
 .about-heading {
-    font-family: 'Times New Roman', Times, serif;
+  font-family: 'Times New Roman', Times, serif;
   font-size: 5rem;
   font-weight: bold;
   color: #fdfbfb;
+}
+
+@media (max-width: 768px) {
+  .heading-container {
+    height: 150px; 
+    margin-top: 30px; 
+  }
+
+  .about-heading {
+    font-size: 3rem;
+  }
 }

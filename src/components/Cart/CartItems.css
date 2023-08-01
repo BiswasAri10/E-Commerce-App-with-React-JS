@@ -1,6 +1,6 @@
 .cart-items {
-  position: absolute;
-  top: 40px;
+  position: fixed;
+  top: 60px;
   right: 10px;
   background-color: #fff;
   border: 1px solid #ccc;
