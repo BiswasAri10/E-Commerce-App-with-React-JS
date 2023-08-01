@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
-import CartItems from "./CartItem";
 import { CartContext } from "../store/CartContext";
 import Button from "react-bootstrap/Button";
+import CartItems from './CartItem';
 import "./Cart.css";
 
 const Cart = () => {
@@ -13,8 +13,15 @@ const Cart = () => {
     setCartOpen(!isCartOpen);
   };
 
-  const handleRemoveItemClick = (item) => {
-    removeItemFromCart(item);
+  const calculateTotal = () => {
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
+  const handleRemoveItemClick = (itemId) => {
+    const itemToRemove = cartItems.find((item) => item.id === itemId);
+    if (itemToRemove) {
+      removeItemFromCart(itemToRemove);
+    }
   };
 
   return (
@@ -27,15 +34,11 @@ const Cart = () => {
         Cart ({getCartCount()})
       </Button>
       {isCartOpen && (
-        <div className="cart-items">
-          {cartItems.map((item, index) => (
-            <CartItems
-              key={index}
-              cartItems={cartItems}
-              handleRemoveItemClick={() => handleRemoveItemClick(item)}
-            />
-          ))}
-        </div>
+        <CartItems
+          cartItems={cartItems}
+          handleRemoveItemClick={handleRemoveItemClick}
+          calculateTotal={calculateTotal}
+        />
       )}
     </div>
   );

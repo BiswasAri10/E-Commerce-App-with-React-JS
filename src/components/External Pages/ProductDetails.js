@@ -46,7 +46,6 @@ const ProductDetail = () => {
   const params = useParams();
   const productId = parseInt(params.productId);
 
-  // Find the product with the matching productId
   const product = productsArr.find((product, Index) => Index + 1 === productId);
 
   const handleAddToCart = (product) => {
@@ -54,7 +53,6 @@ const ProductDetail = () => {
   };
 
   if (!product) {
-    // If the product is not found, show a message or redirect to a 404 page
     return (
       <section>
         <Header />

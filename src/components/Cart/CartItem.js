@@ -1,36 +1,43 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./CartItems.css";
 
-
-const CartItems = ({ cartItems, handleRemoveItemClick }) => {
+const CartItems = ({ cartItems, handleRemoveItemClick, calculateTotal }) => {
   return (
     <div className="cart-items">
-      {cartItems.map((item, index) => (
-        <div className="card mb-3" key={index}>
-          <div className="row no-gutters">
-            <div className="col-md-4">
-              <img
-                src={item.imageUrl}
-                alt={item.title}
-                className="card-img"
-              />
-            </div>
-            <div className="col-md-8">
-              <div className="card-body">
-                <h3 className="card-title">{item.title}</h3>
-                <p className="card-text">Price: ${item.price}</p>
-                <p className="card-text">Quantity: {item.quantity}</p>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => handleRemoveItemClick(item.id)}
-                >
-                  Remove
-                </button>
-              </div>
-            </div>
-          </div>
+      <div className="cart-table">
+        <div className="cart-table-row cart-header">
+          <div className="cart-table-item">ITEM</div>
+          <div className="cart-table-price">PRICE</div>
+          <div className="cart-table-quantity">QUANTITY</div>
+          <div className="cart-table-total">TOTAL</div>
         </div>
-      ))}
+        {cartItems.map((item) => (
+          <div className="cart-item" key={item.id}>
+            <div className="cart-table-image">
+              <img src={item.imageUrl} alt={item.title} />
+            </div>
+            <div className="cart-table-item">{item.title}</div>
+            <div className="cart-table-price">${item.price}</div>
+            <div className="cart-table-quantity">{item.quantity}</div>
+            <div className="cart-table-total">
+              ${item.price * item.quantity}
+            </div>
+            <button
+              className="cart-item-remove-btn"
+              onClick={() => handleRemoveItemClick(item.id)}
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        <div className="cart-table-row cart-total">
+          <div className="cart-table-item"></div>
+          <div className="cart-table-price"></div>
+          <div className="cart-table-quantity"></div>
+          <div className="cart-table-total">Total: ${calculateTotal()}</div>
+        </div>
+      </div>
+      <button className="cart-purchase-button">PURCHASE</button>
     </div>
   );
 };

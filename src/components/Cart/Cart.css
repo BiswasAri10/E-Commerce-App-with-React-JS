@@ -1,18 +1,17 @@
+.cart {
+  position: relative;
+}
+
 .cart-button {
-    position: fixed;
-    top: 8px;
-    right: 10px;
-    font-size: 20px;
-    z-index: 999; 
-  }
-  
-  .cart-items {
-    position: fixed;
-    top: 70px;
-    right: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 10px;
-    z-index: 998; 
-  }
-  
+  position: fixed;
+  top: 12px;
+  right: 10px;
+  font-size: 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 30%; 
+  padding: 10px; 
+  z-index: 999;
+}
+
