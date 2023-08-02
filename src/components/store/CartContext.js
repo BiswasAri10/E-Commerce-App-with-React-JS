@@ -24,31 +24,34 @@ const cartReducer = (state, action) => {
       const itemToRemove = state.find(
         (cartItem) => cartItem.id === action.payload.id
       );
+
       if (itemToRemove) {
-        const updatedState = state.map((cartItem) =>
-          cartItem.id === action.payload.id
-            ? { ...cartItem, quantity: cartItem.quantity - 1 }
-            : cartItem
-        );
-        return updatedState.filter((cartItem) => cartItem.quantity > 0);
+        const updatedQuantity = itemToRemove.quantity - 1;
+
+        if (updatedQuantity > 0) {
+          const updatedState = state.map((cartItem) =>
+            cartItem.id === action.payload.id
+              ? { ...cartItem, quantity: updatedQuantity }
+              : cartItem
+          );
+          return updatedState;
+        } else {
+          return state.filter((cartItem) => cartItem.id !== action.payload.id);
+        }
       }
       return state;
     case "SET_CART_ITEMS":
-      return action.payload.reduce((mergedItems, cartItem) => {
-        const existingItem = mergedItems.find(
-          (item) => item.id === cartItem.id
-        );
-        if (existingItem) {
-          existingItem.quantity += cartItem.quantity;
-        } else {
-          mergedItems.push(cartItem);
-        }
-        return mergedItems;
-      }, []);
+      return action.payload.map((cartItem) => ({
+        ...cartItem,
+        serverGeneratedId: cartItem._id,
+      }));
+
     case "UPDATE_QUANTITY":
-      const { id, quantity } = action.payload;
+      const { id, quantity, serverGeneratedId } = action.payload;
       const updatedState = state.map((cartItem) =>
-        cartItem.id === id ? { ...cartItem, quantity } : cartItem
+        cartItem.id === id
+          ? { ...cartItem, quantity, serverGeneratedId }
+          : cartItem
       );
       return updatedState;
     default:
@@ -66,39 +69,82 @@ export const CartProvider = (props) => {
   const modifiedEmail = currentUserEmail.replace(/[@.]/g, "");
 
   const addToCart = (item) => {
-    const itemToAdd = {
-      id: item.id,
-      imageUrl: item.imageUrl,
-      title: item.title,
-      price: item.price,
-      quantity: item.quantity,
-      total: item.price * item.quantity,
-    };
-    axios
-      .post(
-        `https://crudcrud.com/api/6a747487b3e34325bdd31ad632eca73c/cart${modifiedEmail}`,
-        itemToAdd
-      )
-      .then((response) => {
-        dispatch({ type: "ADD_TO_CART", payload: itemToAdd });
-      })
-      .catch((error) => {
-        console.error("Error adding item to cart:", error);
-      });
+    const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
+
+    if (existingItem) {
+      const updatedQuantity = existingItem.quantity + item.quantity;
+      const updatedItem = { ...existingItem, quantity: updatedQuantity };
+
+      axios
+        .put(
+          `https://crudcrud.com/api/53c9f464acc1454fba7cb908603e90fc/cart${modifiedEmail}/${existingItem.serverGeneratedId}`,
+          updatedItem
+        )
+        .then((response) => {
+          dispatch({ type: "UPDATE_QUANTITY", payload: updatedItem });
+        })
+        .catch((error) => {
+          console.error("Error updating item quantity:", error);
+        });
+    } else {
+      const itemToAdd = {
+        id: item.id,
+        imageUrl: item.imageUrl,
+        title: item.title,
+        price: item.price,
+        quantity: item.quantity,
+        total: item.price * item.quantity,
+      };
+
+      axios
+        .post(
+          `https://crudcrud.com/api/53c9f464acc1454fba7cb908603e90fc/cart${modifiedEmail}`,
+          itemToAdd
+        )
+        .then((response) => {
+          dispatch({
+            type: "ADD_TO_CART",
+            payload: { ...itemToAdd, serverGeneratedId: response.data._id },
+          });
+        })
+        .catch((error) => {
+          console.error("Error adding item to cart:", error);
+        });
+    }
   };
 
   const removeItemFromCart = (item) => {
-    const serverGeneratedId = item._id;
-    axios
-      .delete(
-        `https://crudcrud.com/api/6a747487b3e34325bdd31ad632eca73c/cart${modifiedEmail}/${serverGeneratedId}`
-      )
-      .then((response) => {
-        dispatch({ type: "REMOVE_FROM_CART", payload: item });
-      })
-      .catch((error) => {
-        console.error("Error removing item from cart:", error);
-      });
+    const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
+
+    if (existingItem) {
+      const updatedQuantity = existingItem.quantity - 1;
+      const updatedItem = { ...existingItem, quantity: updatedQuantity };
+
+      axios
+        .put(
+          `https://crudcrud.com/api/53c9f464acc1454fba7cb908603e90fc/cart${modifiedEmail}/${existingItem.serverGeneratedId}`,
+          updatedItem
+        )
+        .then((response) => {
+          if (updatedQuantity > 0) {
+            dispatch({ type: "UPDATE_QUANTITY", payload: updatedItem });
+          } else {
+            axios
+              .delete(
+                `https://crudcrud.com/api/53c9f464acc1454fba7cb908603e90fc/cart${modifiedEmail}/${existingItem.serverGeneratedId}`
+              )
+              .then(() => {
+                dispatch({ type: "REMOVE_FROM_CART", payload: item });
+              })
+              .catch((error) => {
+                console.error("Error removing item from cart:", error);
+              });
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating item quantity:", error);
+        });
+    }
   };
 
   const getCartCount = () => {
@@ -108,7 +154,7 @@ export const CartProvider = (props) => {
   useEffect(() => {
     axios
       .get(
-        `https://crudcrud.com/api/6a747487b3e34325bdd31ad632eca73c/cart${modifiedEmail}`
+        `https://crudcrud.com/api/53c9f464acc1454fba7cb908603e90fc/cart${modifiedEmail}`
       )
       .then((response) => {
         dispatch({ type: "SET_CART_ITEMS", payload: response.data });
