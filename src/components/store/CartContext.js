@@ -45,6 +45,12 @@ const cartReducer = (state, action) => {
         }
         return mergedItems;
       }, []);
+    case "UPDATE_QUANTITY":
+      const { id, quantity } = action.payload;
+      const updatedState = state.map((cartItem) =>
+        cartItem.id === id ? { ...cartItem, quantity } : cartItem
+      );
+      return updatedState;
     default:
       return state;
   }
@@ -70,7 +76,7 @@ export const CartProvider = (props) => {
     };
     axios
       .post(
-        `https://crudcrud.com/api/410a876eb6ec45ca8ce8bc2d36c7195b/cart${modifiedEmail}`,
+        `https://crudcrud.com/api/6a747487b3e34325bdd31ad632eca73c/cart${modifiedEmail}`,
         itemToAdd
       )
       .then((response) => {
@@ -82,10 +88,10 @@ export const CartProvider = (props) => {
   };
 
   const removeItemFromCart = (item) => {
+    const serverGeneratedId = item._id;
     axios
-      .put(
-        `https://crudcrud.com/api/410a876eb6ec45ca8ce8bc2d36c7195b/cart${modifiedEmail}`,
-        item
+      .delete(
+        `https://crudcrud.com/api/6a747487b3e34325bdd31ad632eca73c/cart${modifiedEmail}/${serverGeneratedId}`
       )
       .then((response) => {
         dispatch({ type: "REMOVE_FROM_CART", payload: item });
@@ -102,7 +108,7 @@ export const CartProvider = (props) => {
   useEffect(() => {
     axios
       .get(
-        `https://crudcrud.com/api/410a876eb6ec45ca8ce8bc2d36c7195b/cart${modifiedEmail}`
+        `https://crudcrud.com/api/6a747487b3e34325bdd31ad632eca73c/cart${modifiedEmail}`
       )
       .then((response) => {
         dispatch({ type: "SET_CART_ITEMS", payload: response.data });
