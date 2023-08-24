@@ -37,9 +37,9 @@ export const AuthContextProvider = (props) => {
     const currentUserEmail = localStorage.getItem("email");
     localStorage.removeItem(`cartItems_${currentUserEmail}`);
 
-    if (logoutTimeout) {
-      clearTimeout(logoutTimeout);
-    }
+    // if (logoutTimeout) {
+    //   clearTimeout(logoutTimeout);
+    // }
   };
 
   // useEffect(() => {
