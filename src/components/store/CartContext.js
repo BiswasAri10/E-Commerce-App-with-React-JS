@@ -77,7 +77,7 @@ export const CartProvider = (props) => {
 
       axios
         .put(
-          `https://crudcrud.com/api/53c9f464acc1454fba7cb908603e90fc/cart${modifiedEmail}/${existingItem.serverGeneratedId}`,
+          `https://crudcrud.com/api/34cecb4e65824c93a8e4f98f5edba574/cart${modifiedEmail}/${existingItem.serverGeneratedId}`,
           updatedItem
         )
         .then((response) => {
@@ -98,7 +98,7 @@ export const CartProvider = (props) => {
 
       axios
         .post(
-          `https://crudcrud.com/api/53c9f464acc1454fba7cb908603e90fc/cart${modifiedEmail}`,
+          `https://crudcrud.com/api/34cecb4e65824c93a8e4f98f5edba574/cart${modifiedEmail}`,
           itemToAdd
         )
         .then((response) => {
@@ -122,7 +122,7 @@ export const CartProvider = (props) => {
 
       axios
         .put(
-          `https://crudcrud.com/api/53c9f464acc1454fba7cb908603e90fc/cart${modifiedEmail}/${existingItem.serverGeneratedId}`,
+          `https://crudcrud.com/api/34cecb4e65824c93a8e4f98f5edba574/cart${modifiedEmail}/${existingItem.serverGeneratedId}`,
           updatedItem
         )
         .then((response) => {
@@ -131,7 +131,7 @@ export const CartProvider = (props) => {
           } else {
             axios
               .delete(
-                `https://crudcrud.com/api/53c9f464acc1454fba7cb908603e90fc/cart${modifiedEmail}/${existingItem.serverGeneratedId}`
+                `https://crudcrud.com/api/34cecb4e65824c93a8e4f98f5edba574/cart${modifiedEmail}/${existingItem.serverGeneratedId}`
               )
               .then(() => {
                 dispatch({ type: "REMOVE_FROM_CART", payload: item });
@@ -154,7 +154,7 @@ export const CartProvider = (props) => {
   useEffect(() => {
     axios
       .get(
-        `https://crudcrud.com/api/53c9f464acc1454fba7cb908603e90fc/cart${modifiedEmail}`
+        `https://crudcrud.com/api/34cecb4e65824c93a8e4f98f5edba574/cart${modifiedEmail}`
       )
       .then((response) => {
         dispatch({ type: "SET_CART_ITEMS", payload: response.data });
