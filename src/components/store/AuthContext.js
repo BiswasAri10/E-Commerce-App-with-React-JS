@@ -26,7 +26,7 @@ export const AuthContextProvider = (props) => {
     setEmail(email);
     localStorage.setItem("email", email);
 
-    setLogoutTimeout(setTimeout(logoutHandler, 5 * 60 * 1000));
+    // setLogoutTimeout(setTimeout(logoutHandler, 5 * 60 * 1000));
   };
 
   const logoutHandler = () => {
@@ -42,17 +42,17 @@ export const AuthContextProvider = (props) => {
     }
   };
 
-  useEffect(() => {
-    if (userIsLoggedIn) {
-      setLogoutTimeout(setTimeout(logoutHandler, 5 * 60 * 1000));
-    }
+  // useEffect(() => {
+  //   if (userIsLoggedIn) {
+  //     setLogoutTimeout(setTimeout(logoutHandler, 5 * 60 * 1000));
+  //   }
 
-    return () => {
-      if (logoutTimeout) {
-        clearTimeout(logoutTimeout);
-      }
-    };
-  }, [userIsLoggedIn]);
+  //   return () => {
+  //     if (logoutTimeout) {
+  //       clearTimeout(logoutTimeout);
+  //     }
+  //   };
+  // }, [userIsLoggedIn]);
 
   const contextValue = {
     token: token,
